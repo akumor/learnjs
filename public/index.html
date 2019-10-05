@@ -38,7 +38,13 @@
         background: #666;
       }
       .nav-container a { color: white;}
+      .navbar-padding {
+        padding-top: 7px;
+        display: inline-block;
+      }
     </style>
+    <meta name="google-signin-client_id" content="84852617481-n3q0s29veu9ikbsq8htor09offcdhs51.apps.googleusercontent.com" >
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <body>
     <div class='markup'>
@@ -47,27 +53,39 @@
           <li><a class='text-lg' href="#">LearnJS</a></li>
           <li><a href="#problem-1">Start</a></li>
         </ul>
+        <div class='four columns signin-bar'>
+          <span class='navbar-padding u-pull-right'>
+            <span class="g-signin2" data-onsuccess="googleSignIn"></span>
+          </span>
+        </div>
       </div>
       <div class='view-container container'>
       </div>
       <div class='templates'>
-          <div class='landing-view'>
-              <div class='row'>
-                <div class='one-half column'>
-                  <h3>Learn JavaScript, one puzzle at a time.</h3>
-                  <a href='#problem-1' class='button button-primary'>Start Now!</a>
-                </div>
-                <div class='one-half column'>
-                  <img src='/images/HeroImage.jpg'/>
-                </div>
-              </div>
+        <div class='profile-link navbar-padding-lg'>
+            <a href="#profile"></a>
+        </div>
+        <div class='landing-view'>
+          <div class='row'>
+            <div class='one-half column'>
+              <h3>Learn JavaScript, one puzzle at a time.</h3>
+              <a href='#problem-1' class='button button-primary'>Start Now!</a>
             </div>
+            <div class='one-half column'>
+              <img src='/images/HeroImage.jpg'/>
+            </div>
+          </div>
+        </div>
+        <div class='profile-view'>
+          <h3>Your Profile</h3>
+          <div class='email'></div>
+        </div>
         <div class='problem-view'>
           <h3 class='title'></h3>
           <p data-name='description'></p>
           <pre><code data-name='code'></code></pre>
           <form>
-            <textarea class='u-full-width answer'></textarea>
+            <textarea class='u-full-width answer fixed-width-text'></textarea>
             <div>
               <button class='button-primary check-btn'>Check Answer</button>
               <p class='result'></p>
