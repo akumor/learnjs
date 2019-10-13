@@ -152,7 +152,8 @@ learnjs.showView = function(hash) {
     '': learnjs.landingView,
     '#': learnjs.landingView,
     '#landing': learnjs.landingView,
-    '#profile': learnjs.profileView
+    '#profile': learnjs.profileView,
+    '#popularanswers': learnjs.popularAnswersView,
   };
   var hashParts = hash.split('-');
   var viewFn = routes[hashParts[0]];
@@ -186,6 +187,20 @@ learnjs.addProfileLink = function(profile) {
   var link = learnjs.template('profile-link');
   link.find('a').text(profile.email);
   $('.signin-bar').prepend(link);
+}
+
+learnjs.popularAnswersView = function(data) {
+  console.log('Entered popularAnswersView');
+  var problemNumber = parseInt(data, 10);
+  var view = learnjs.template('popularanswers-view');
+  view.find('.problem-title').text('Problem #' + problemNumber);
+  learnjs.identity.done(function(identity) {
+    learnjs.popularAnswers(problemNumber).then(function(data) {
+      console.log(data);
+      view.find('.popularanswers').text(data.Payload);
+    });
+  });
+  return view;
 }
 
 learnjs.sendAwsRequest = function(req, retry) {
@@ -259,10 +274,11 @@ learnjs.countAnswers = function(problemId) {
 }
 
 learnjs.popularAnswers = function(problemId) {
+  console.log('Entered popularAnswers');
   return learnjs.identity.then(function() {
     var lambda = new AWS.Lambda();
     var params = {
-      FunctionName: 'learnjs_popularAnswers',
+      FunctionName: 'popularAnswers',
       Payload: JSON.stringify({problemNumber: problemId})
     };
     return learnjs.sendAwsRequest(lambda.invoke(params), function() {
